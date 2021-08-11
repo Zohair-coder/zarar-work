@@ -4,6 +4,7 @@ import json
 READ_FILE = "DaytonInformationRajNew10AUG2020.xlsx"
 WRITE_FILE = "Packaging_Matrix_UOM_Template_revE - DORMAN USE ONLY.xlsx"
 
+print("Reading {}...".format(READ_FILE))
 workbook1 = load_workbook(READ_FILE, read_only=True, data_only=True)
 sheet1 = workbook1["PKG Data New"]
 
@@ -17,10 +18,13 @@ for row in sheet1.iter_rows(min_row=2, min_col=1, max_col=7, values_only=True):
     new_data["width"] = row[5]
     new_data["height"] = row[6]
     data.append(new_data)
-
+print("Done")
+print()
+print("Opening {}...".format(WRITE_FILE))
 workbook2 = load_workbook(WRITE_FILE, data_only=True)
 sheet2 = workbook2["Alt UoM Matrix"]
 
+print("Writing changes...")
 count = 0
 for row in sheet2.iter_rows(min_row=14, min_col=3, max_col=9):
     if row[0].value == "H":
@@ -30,5 +34,6 @@ for row in sheet2.iter_rows(min_row=14, min_col=3, max_col=9):
         row[5].value = data[count]["width"]
         row[6].value = data[count]["height"]
         count += 1
-
+print("Saving file...")
 workbook2.save(filename=WRITE_FILE)
+print("Done")

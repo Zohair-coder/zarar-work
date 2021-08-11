@@ -38,7 +38,6 @@ def create_xlsx(data, dir, count=0, num=1, workbook=None, sheet=None):
         workbook = load_workbook(WRITE_FILE, data_only=True)
         sheet = workbook[WRITE_FILE_SHEET]
     for row in sheet.iter_rows(min_row=14, min_col=3, max_col=9):
-        print(count)
         if count == len(data):
             break
         if row[0].value == "H":

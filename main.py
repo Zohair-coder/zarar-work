@@ -33,10 +33,12 @@ def read_xlsx():
         data.append(new_data)
     return data
 
-def create_xlsx(data, dir, count=0, num=1):
-    workbook = load_workbook(WRITE_FILE, data_only=True)
-    sheet = workbook[WRITE_FILE_SHEET]
+def create_xlsx(data, dir, count=0, num=1, workbook=None, sheet=None):
+    if not workbook or not sheet:
+        workbook = load_workbook(WRITE_FILE, data_only=True)
+        sheet = workbook[WRITE_FILE_SHEET]
     for row in sheet.iter_rows(min_row=14, min_col=3, max_col=9):
+        print(count)
         if count == len(data):
             break
         if row[0].value == "H":
@@ -52,7 +54,7 @@ def create_xlsx(data, dir, count=0, num=1):
 
     if count < len(data):
         workbook.save(filename=name)
-        create_xlsx(data, dir, count, num+1)
+        create_xlsx(data, dir, count, num+1, workbook, sheet)
         return
     
     workbook.save(filename=name)

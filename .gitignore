@@ -1,1 +1,4 @@
 *.xlsx
+test.py
+./sample_files
+./output

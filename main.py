@@ -35,29 +35,32 @@ def read_xlsx():
     return data
 
 def create_xlsx(data, dir, count=0, num=1):
-    workbook = load_workbook(WRITE_FILE, data_only=True)
-    sheet = workbook[WRITE_FILE_SHEET]
-    for row in sheet.iter_rows(min_row=21, min_col=3, max_col=10):
-        if count == len(data):
-            break
-        if row[0].value == "H":
-            row[1].value = data[count]["partnum"]
-        elif row[2].value == "EA":
-            row[4].value = data[count]["length"]
-            row[5].value = data[count]["width"]
-            row[6].value = data[count]["height"]
-            row[7].value = data[count]["weight"]
-            count += 1
-    name = "{}/output{}_{}-{}.xlsx".format(dir, num, count-99, count)
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
+    isDone = False
+    while not isDone:
+        workbook = load_workbook(WRITE_FILE, data_only=True)
+        sheet = workbook[WRITE_FILE_SHEET]
+        for row in sheet.iter_rows(min_row=21, min_col=3, max_col=10):
+            if count == len(data):
+                break
+            if row[0].value == "H":
+                row[1].value = data[count]["partnum"]
+            elif row[2].value == "EA":
+                row[4].value = data[count]["length"]
+                row[5].value = data[count]["width"]
+                row[6].value = data[count]["height"]
+                row[7].value = data[count]["weight"]
+                count += 1
+        name = "{}/output{}_{}-{}.xlsx".format(dir, num, count-99, count)
+        if not os.path.isdir(dir):
+            os.mkdir(dir)
 
-    if count < len(data):
         workbook.save(filename=name)
         print("Saved file: {}".format(name))
-        create_xlsx(data, dir, count, num+1)
-        return
-    print("Saved file: {}".format(name))
-    workbook.save(filename=name)
+        num += 1
+        
+        if count == len(data):
+            isDone = True
+
+
 if __name__ == "__main__":
     main()

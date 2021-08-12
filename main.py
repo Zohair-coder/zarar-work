@@ -22,7 +22,7 @@ def read_xlsx():
     workbook = load_workbook(READ_FILE, read_only=True, data_only=True)
     sheet = workbook[READ_FILE_SHEET]
     data = []
-    for row in sheet.iter_rows(min_row=2, min_col=1, max_col=7, values_only=True):
+    for row in sheet.iter_rows(min_row=2, min_col=1, max_col=8, values_only=True):
         if row[0] is None:
             break
         new_data = dict()
@@ -30,6 +30,7 @@ def read_xlsx():
         new_data["length"] = row[4]
         new_data["width"] = row[5]
         new_data["height"] = row[6]
+        new_data["weight"] = row[7]
         data.append(new_data)
     return data
 
@@ -37,7 +38,7 @@ def create_xlsx(data, dir, count=0, num=1, workbook=None, sheet=None):
     if not workbook or not sheet:
         workbook = load_workbook(WRITE_FILE, data_only=True)
         sheet = workbook[WRITE_FILE_SHEET]
-    for row in sheet.iter_rows(min_row=14, min_col=3, max_col=9):
+    for row in sheet.iter_rows(min_row=14, min_col=3, max_col=10):
         if count == len(data):
             break
         if row[0].value == "H":
@@ -46,6 +47,7 @@ def create_xlsx(data, dir, count=0, num=1, workbook=None, sheet=None):
             row[4].value = data[count]["length"]
             row[5].value = data[count]["width"]
             row[6].value = data[count]["height"]
+            row[7].value = data[count]["weight"]
             count += 1
     name = "{}/output{}_{}-{}.xlsx".format(dir, num, count-100, count)
     if not os.path.isdir(dir):

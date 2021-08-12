@@ -34,7 +34,9 @@ def read_xlsx():
         data.append(new_data)
     return data
 
-def create_xlsx(data, dir, count=0, num=1):
+def create_xlsx(data, dir):
+    count = 0
+    num = 1
     isDone = False
     while not isDone:
         workbook = load_workbook(WRITE_FILE, data_only=True)

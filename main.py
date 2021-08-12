@@ -38,7 +38,7 @@ def create_xlsx(data, dir, count=0, num=1, workbook=None, sheet=None):
     if workbook is None or sheet is None:
         workbook = load_workbook(WRITE_FILE, data_only=True)
         sheet = workbook[WRITE_FILE_SHEET]
-    for row in sheet.iter_rows(min_row=14, min_col=3, max_col=10):
+    for row in sheet.iter_rows(min_row=21, min_col=3, max_col=10):
         if count == len(data):
             break
         if row[0].value == "H":
@@ -49,7 +49,7 @@ def create_xlsx(data, dir, count=0, num=1, workbook=None, sheet=None):
             row[6].value = data[count]["height"]
             row[7].value = data[count]["weight"]
             count += 1
-    name = "{}/output{}_{}-{}.xlsx".format(dir, num, count-100, count)
+    name = "{}/output{}_{}-{}.xlsx".format(dir, num, count-99, count)
     if not os.path.isdir(dir):
         os.mkdir(dir)
 

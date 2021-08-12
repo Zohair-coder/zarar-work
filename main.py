@@ -54,6 +54,7 @@ def create_xlsx(data, dir, count=0, num=1):
 
     if count < len(data):
         workbook.save(filename=name)
+        print("Saved file: {}".format(name))
         create_xlsx(data, dir, count, num+1)
         return
     

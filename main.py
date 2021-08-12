@@ -36,11 +36,12 @@ def read_xlsx():
 
 def create_xlsx(data, dir):
     count = 0
-    num = 1
+    file_num = 1
     isDone = False
     while not isDone:
         workbook = load_workbook(WRITE_FILE, data_only=True)
         sheet = workbook[WRITE_FILE_SHEET]
+        initial_count = count + 1
         for row in sheet.iter_rows(min_row=21, min_col=3, max_col=10):
             if count == len(data):
                 break
@@ -52,13 +53,13 @@ def create_xlsx(data, dir):
                 row[6].value = data[count]["height"]
                 row[7].value = data[count]["weight"]
                 count += 1
-        name = "{}/output{}_{}-{}.xlsx".format(dir, num, count-99, count)
+        name = "{}/output{}_{}-{}.xlsx".format(dir, file_num, initial_count, count)
         if not os.path.isdir(dir):
             os.mkdir(dir)
 
         workbook.save(filename=name)
         print("Saved file: {}".format(name))
-        num += 1
+        file_num += 1
         
         if count == len(data):
             isDone = True

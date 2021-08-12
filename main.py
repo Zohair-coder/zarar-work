@@ -57,7 +57,7 @@ def create_xlsx(data, dir, count=0, num=1):
         print("Saved file: {}".format(name))
         create_xlsx(data, dir, count, num+1)
         return
-    
+    print("Saved file: {}".format(name))
     workbook.save(filename=name)
 if __name__ == "__main__":
     main()
